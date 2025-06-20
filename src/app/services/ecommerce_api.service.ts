@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, Output } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from '@angular/router';
 import { IToken } from '../interface/IToken';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+import { IProduct } from '../interface/IProduct';
 
 
 @Injectable({
@@ -10,40 +12,61 @@ import { tap } from 'rxjs';
 })
 export class EcommerceApiService {
 
-
   constructor(
     private http: HttpClient,
-    private router: Router
+    
   ) { 
     
   }
 
+  private decoder = jwtDecode;
+  router: Router = inject(Router);
+
+  signIn(username: string, password: string): Observable<any> {
+    return this.http.post('http://localhost:80/auth', { username, password });
+  }
+
+  fetchAllProducts(pageNumber: number, limit: number): Observable<IProduct> {
+    return this.http.get<IProduct>('http://localhost:80/product',{
+      headers: this.getToken(), 
+      params: { page: pageNumber.toString(), limit: limit.toString()}
+    });
+  }
   
-  signIn(username: string, password: string) {
-    username = username.trim();
+  isAuthenticatedAndValid(): boolean {
+    if(!this.validateToken()){
+      return false;
+    }
+  
+    return !!localStorage.getItem('accessToken');
+  }
 
-    const body = { username, password };
-
-    this.http.post<IToken>('http://localhost:80/auth', body).subscribe({
-      next: (response) => { 
-        if (typeof window !== 'undefined') { 
-          this.set('accessToken', response.accessToken);
-        }
-        this.router.navigate(['/home']);
-        console.log('Usuário autenticado com sucesso!');
-      },
-      error: (err) => {
-        alert('Usuário ou senha inválidos!');
-      }
+  goToPage(_page: number) {
+    return this.http.get<IProduct>('http://localhost:80/product',{
+      headers: this.getToken(), 
+      params: { page: _page, limit: 10}
     });
   }
 
-  isAuthenticated(): boolean {
-      return !!localStorage.getItem('accessToken');
-      
-  }
-
-  private set(key: string ,value: string) {
+  set(key: string ,value: string) {
     localStorage.setItem(key, value);
   }
+
+  private validateToken(): boolean {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) return false;
+
+    const decoded: any = this.decoder(token);
+    const currentTime = Math.floor(Date.now() / 1000);
+
+    return decoded.exp > currentTime;
+  }
+
+  private getToken(): HttpHeaders{
+    return  new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+    })
+  }
+  
 }

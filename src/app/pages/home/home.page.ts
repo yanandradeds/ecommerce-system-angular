@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { EcommerceApiService } from '../../services/ecommerce_api.service';
+import { Router } from '@angular/router';
+import { IProduct} from '../../interface/IProduct';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -6,8 +10,38 @@ import { Component } from '@angular/core';
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss'
 })
-export class HomePageComponent {
+export class HomePage {
 
-   access_token: string = localStorage.getItem('accessToken') || '';
+  constructor(private service: EcommerceApiService, private router: Router) { }
+
+  ngOnInit() {
+    this.navigateToPage();
+  }
+
+  arrayWithLengthOfTotalPages: Array<any> = Array(1);
+  products!: IProduct;
+  actualPage!: number;
+
+  navigateToPage(wantedPage?: number) {
+    this.handleApiResponse(this.service.fetchAllProducts(wantedPage || 1, 10))
+  }
+
+  logout(){
+    this.service.set('accessToken','');
+    this.service.router.navigate([''])
+  }
+
+  private handleApiResponse(observer: Observable<IProduct>) {
+    observer.subscribe({
+      next: (data) => {
+        this.products = data;
+        this.arrayWithLengthOfTotalPages = Array(data.totalPages);
+        this.actualPage = data.pageable.pageNumber;
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+      }
+    });    
+  }
 
 }

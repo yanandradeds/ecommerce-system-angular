@@ -1,3 +1,36 @@
-<p>home-page works!</p>
 
-<p>O seu token é : {{access_token}} </p>
+  <body>
+  <table class="products-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(product of products.content; track $index) {
+        <tr>
+          <td>{{product.description}}</td>
+          <td>{{product.price}}</td>
+          <td>{{product.quantity}}</td>
+        </tr>              
+      }      
+    </tbody>
+  </table>
+  </body>
+ 
+  <div class="footer-container">
+    <div class="previousPage">
+      <button (click)="navigateToPage(actualPage - 1)">Previous Page</button>
+    </div>
+    <div class="buttons">
+      <button (click)="navigateToPage(actualPage + 1)">{{actualPage + 1}}</button>
+      <button (click)="navigateToPage(actualPage + 2)">{{actualPage + 2}}</button>
+      <button (click)="navigateToPage(actualPage + 3)">{{actualPage + 3}}</button>
+      <button (click)="navigateToPage(actualPage + 4)">{{actualPage + 4}}</button>
+    </div>    
+    <div class="logout">
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>

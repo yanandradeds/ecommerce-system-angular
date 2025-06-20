@@ -11,16 +11,40 @@ import { Router, RouterOutlet } from '@angular/router';
   templateUrl: './authentication.page.html',
   styleUrl: './authentication.page.scss'
 })
-export class AuthenticationComponent {
+export class AuthenticationPage {
 
 
   private service = inject(EcommerceApiService)
 
+  errorMessage: string | null = null;
+
   username: string = '';
   password: string = '';
 
-  signIn(){
-    this.service.signIn(this.username, this.password);
+  ngOnInit(){
+    if(this.service.isAuthenticatedAndValid()){
+      this.service.router.navigate(['/home']);
+    }
   }
+
+  signIn() {
+    this.service.signIn(this.username, this.password).subscribe({
+      next: (response) => {
+        if (typeof window !== 'undefined') {
+          this.service.set('accessToken', response.accessToken);
+        }
+        this.service.router.navigate(['/home']);
+        console.log('Usuário autenticado com sucesso!');
+      },
+      error: (err) => {
+        if (err.status === 500) { 
+          this.errorMessage = 'Senha ou usuário inválido.';
+        } else {
+          alert('Failed to connect to the server. Please try again later.');
+        }
+      }
+    });
+  }
+ 
 
 }

@@ -6,7 +6,7 @@ export const pagesGuard: CanActivateFn = (route, state) => {
   const service = inject(EcommerceApiService);
   const router = inject(Router);
 
-  if(service.isAuthenticated()) {
+  if(service.isAuthenticatedAndValid()) {
     return true
   }
 

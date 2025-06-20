@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { AuthenticationComponent } from './pages/authentication/authentication.page';
-import { HomePageComponent } from './pages/home/home.page';
+import {  AuthenticationPage } from './pages/authentication/authentication.page';
+import { HomePage } from './pages/home/home.page';
 import { pagesGuard } from './guards/pages.guard';
 
 
@@ -8,11 +8,11 @@ import { pagesGuard } from './guards/pages.guard';
 export const routes: Routes = [
     {
         path: "",
-        component: AuthenticationComponent
+        component: AuthenticationPage
     },
     {
         path: "home",
-        component: HomePageComponent,
+        component: HomePage,
         canActivate: [pagesGuard]
     }
 ];

@@ -1,0 +1,59 @@
+html {
+     height: 100%;
+}
+
+body {
+    background-color: #080710;
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    position: relative;
+}
+
+table {
+    border: 2px solid gray;
+    background-color: white;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: left;
+    
+
+    
+}
+
+th, td {
+    border: 2px solid gray;
+    
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    background-color: #272727;
+    
+    
+}
+
+.previousPage {
+    margin-left: 3vw;
+    justify-self: flex-start;
+}
+
+.logout {
+    margin-right: 3vw;
+}
+
+.buttons {
+
+
+    button {
+        width:  40px;
+        height: 46px;
+        margin: 2px;
+    }
+
+}
+
