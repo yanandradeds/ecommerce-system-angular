@@ -12,7 +12,8 @@ import { Observable } from 'rxjs';
 })
 export class HomePage {
 
-  constructor(private service: EcommerceApiService, private router: Router) { }
+  constructor(private service: EcommerceApiService, private router: Router) { 
+  }
 
   ngOnInit() {
     this.navigateToPage();
@@ -21,12 +22,22 @@ export class HomePage {
   arrayWithLengthOfTotalPages: Array<any> = Array(1);
   products!: IProduct;
   actualPage!: number;
+  logouting: boolean = false;
 
   navigateToPage(wantedPage?: number) {
     this.handleApiResponse(this.service.fetchAllProducts(wantedPage || 1, 10))
   }
 
+  showConfirmLogout(){
+    this.logouting = true;
+  }
+
+  cancelLogout(){
+    this.logouting = false;
+  }
+
   logout(){
+    this.logouting = false;
     this.service.set('accessToken','');
     this.service.router.navigate([''])
   }

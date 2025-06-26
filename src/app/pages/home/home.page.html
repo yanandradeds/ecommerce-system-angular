@@ -1,36 +1,59 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
-  <body>
-  <table class="products-table">
-    <thead>
+
+
+<body>
+  @if (logouting) {
+    <div class="sure-logout">
+      <div class="popup">
+        <label> Are you sure you want to log out? </label>
+        <div class="logout-btns">
+          <button (click)="logout()">Yes</button>
+          <button (click)="cancelLogout()">No</button>
+        </div>
+      </div>
+    </div>
+  }
+
+ <div class="header-container">
+  <img src="home.png" class="img-tag" (click)="showConfirmLogout()">
+  <h1>Ecommerce System</h1>
+ </div>
+
+<table class="products-table" >
+  <caption>Products Table</caption>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(product of products.content; track $index) {
       <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for(product of products.content; track $index) {
-        <tr>
-          <td>{{product.description}}</td>
-          <td>{{product.price}}</td>
-          <td>{{product.quantity}}</td>
-        </tr>              
-      }      
-    </tbody>
-  </table>
-  </body>
- 
-  <div class="footer-container">
-    <div class="previousPage">
-      <button (click)="navigateToPage(actualPage - 1)">Previous Page</button>
-    </div>
-    <div class="buttons">
-      <button (click)="navigateToPage(actualPage + 1)">{{actualPage + 1}}</button>
-      <button (click)="navigateToPage(actualPage + 2)">{{actualPage + 2}}</button>
-      <button (click)="navigateToPage(actualPage + 3)">{{actualPage + 3}}</button>
-      <button (click)="navigateToPage(actualPage + 4)">{{actualPage + 4}}</button>
-    </div>    
-    <div class="logout">
-      <button (click)="logout()">Logout</button>
-    </div>
+        <td>{{product.description}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.quantity}}</td>
+      </tr>         
+    }      
+  </tbody>
+</table>
+</body>
+
+<div class="footer-container">
+  <div class="div-left" ></div>
+  <div class="middle-btn">
+    <button (click)="navigateToPage(actualPage - 2)" id="two-backward"><<</button>
+    <button (click)="navigateToPage(actualPage - 1)"id="one-backward"><</button>
+    <button id="actual-page-btn">{{actualPage}}</button>
+    <button (click)="navigateToPage(actualPage + 1)">{{actualPage + 1}}</button>
+    <button (click)="navigateToPage(actualPage + 2)">{{actualPage + 2}}</button>
+    <button (click)="navigateToPage(actualPage + 3)">{{actualPage + 3}}</button>
+    <button (click)="navigateToPage(actualPage + 1)" id="two-forward">></button>
+    <button (click)="navigateToPage(actualPage + 2)" id="one-forward">>></button>
+  </div>    
+  <div class="div-right">
+    <button (click)="showConfirmLogout()">Logout</button>
   </div>
+</div>
