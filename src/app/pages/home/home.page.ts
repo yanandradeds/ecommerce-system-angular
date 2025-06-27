@@ -23,6 +23,8 @@ export class HomePage {
   products!: IProduct;
   actualPage!: number;
   logouting: boolean = false;
+  arrayToFor: Array<any> = Array(4);
+  totalPages!: number;
 
   navigateToPage(wantedPage?: number) {
     this.handleApiResponse(this.service.fetchAllProducts(wantedPage || 1, 10))
@@ -48,6 +50,7 @@ export class HomePage {
         this.products = data;
         this.arrayWithLengthOfTotalPages = Array(data.totalPages);
         this.actualPage = data.pageable.pageNumber;
+        this.totalPages = data.totalPages;
       },
       error: (err) => {
         console.error('Error fetching products:', err);

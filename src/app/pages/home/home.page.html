@@ -44,14 +44,17 @@
 <div class="footer-container">
   <div class="div-left" ></div>
   <div class="middle-btn">
-    <button (click)="navigateToPage(actualPage - 2)" id="two-backward"><<</button>
-    <button (click)="navigateToPage(actualPage - 1)"id="one-backward"><</button>
+    @if (actualPage < 3) {
+
+    }
+    <button (click)="navigateToPage(actualPage - 2)" id="two-backward" [disabled]="actualPage < 3"><<</button>
+    <button (click)="navigateToPage(actualPage - 1)" id="one-backward" [disabled]="actualPage < 2"><</button>
     <button id="actual-page-btn">{{actualPage}}</button>
-    <button (click)="navigateToPage(actualPage + 1)">{{actualPage + 1}}</button>
-    <button (click)="navigateToPage(actualPage + 2)">{{actualPage + 2}}</button>
-    <button (click)="navigateToPage(actualPage + 3)">{{actualPage + 3}}</button>
-    <button (click)="navigateToPage(actualPage + 1)" id="two-forward">></button>
-    <button (click)="navigateToPage(actualPage + 2)" id="one-forward">>></button>
+    <button (click)="navigateToPage(actualPage + 1)" [disabled]="actualPage == totalPages">{{actualPage + 1}}</button>
+    <button (click)="navigateToPage(actualPage + 2)" [disabled]="actualPage >= (totalPages - 1)">{{actualPage + 2}}</button>
+    <button (click)="navigateToPage(actualPage + 3)" [disabled]="actualPage >= (totalPages - 2)">{{actualPage + 3}}</button>
+    <button (click)="navigateToPage(actualPage + 1)" id="one-forward" [disabled]="actualPage >= totalPages">></button>
+    <button (click)="navigateToPage(actualPage + 2)" id="two-forward" [disabled]="actualPage >= (totalPages - 1)">>></button>
   </div>    
   <div class="div-right">
     <button (click)="showConfirmLogout()">Logout</button>
