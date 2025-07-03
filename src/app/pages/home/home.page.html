@@ -3,6 +3,7 @@
 
 
 <body>
+  
   @if (logouting) {
     <div class="sure-logout">
       <div class="popup">
@@ -14,11 +15,11 @@
       </div>
     </div>
   }
-
- <div class="header-container">
-  <img src="home.png" class="img-tag" (click)="showConfirmLogout()">
-  <h1>Ecommerce System</h1>
- </div>
+  
+  <div class="header-container">
+    <img src="home.png" class="img-tag" (click)="showConfirmLogout()">
+    <h1>Ecommerce System</h1>
+  </div>
 
 <table class="products-table" >
   <caption>Products Table</caption>
@@ -44,9 +45,6 @@
 <div class="footer-container">
   <div class="div-left" ></div>
   <div class="middle-btn">
-    @if (actualPage < 3) {
-
-    }
     <button (click)="navigateToPage(actualPage - 2)" id="two-backward" [disabled]="actualPage < 3"><<</button>
     <button (click)="navigateToPage(actualPage - 1)" id="one-backward" [disabled]="actualPage < 2"><</button>
     <button id="actual-page-btn">{{actualPage}}</button>
