@@ -46,5 +46,10 @@ export class AuthenticationPage {
     });
   }
  
-
+  hideErrorAuth(){
+    if(this.errorMessage){
+      this.errorMessage = null;
+      
+    }
+  }
 }
