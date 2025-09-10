@@ -1,5 +1,11 @@
 # EcommerceSystemAngular
 
+# Requisitos do Projeto
+Imagens do Docker Hub
+* yanads1/front-end-angular
+* yanads1/back-end-java
+* yanads1/db-mysql
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.13.
 
 ## Development server
