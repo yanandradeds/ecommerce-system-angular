@@ -1,5 +1,3 @@
-# EcommerceSystemAngular
-
 # Requisitos do Projeto
 Imagens do Docker Hub
 * yanads1/front-end-angular
